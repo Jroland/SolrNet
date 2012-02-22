@@ -31,5 +31,13 @@ namespace SolrNet {
 		SolrQueryResults<T> Execute(ISolrQuery q, QueryOptions options);
 
         SolrMoreLikeThisHandlerResults<T> Execute(SolrMLTQuery query, MoreLikeThisHandlerQueryOptions options);
-	}
+
+        /// <summary>
+        /// Returns the Solr Uri that would be executed
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="options"></param>
+        /// <returns>Uri that would be sent to a Solr server</returns>
+        System.Uri GetQuery(ISolrQuery query, QueryOptions options);
+    }
 }

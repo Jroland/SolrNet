@@ -85,11 +85,9 @@ namespace SolrNet.Impl {
         }
 
         public string PostStream(string relativeUrl, string contentType, Stream content, IEnumerable<KeyValuePair<string, string>> parameters) {
-            var u = new UriBuilder(serverURL);
-            u.Path += relativeUrl;
-            u.Query = GetQuery(parameters);
+            var uri = GetQuery(relativeUrl, parameters);
 
-            var request = HttpWebRequestFactory.Create(u.Uri);
+            var request = HttpWebRequestFactory.Create(uri);
             request.Method = HttpWebRequestMethod.POST;
             request.KeepAlive = true;
             request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
@@ -127,17 +125,23 @@ namespace SolrNet.Impl {
                 output.Write(buffer, 0, read);
         }
 
-        public string Get(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters) {
+        public Uri GetQuery(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters)
+        {
             var u = new UriBuilder(serverURL);
             u.Path += relativeUrl;
             u.Query = GetQuery(parameters);
+            return u.Uri;
+        }
 
-            var request = HttpWebRequestFactory.Create(u.Uri);
+        public string Get(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters) {
+            var uri = GetQuery(relativeUrl, parameters);
+
+            var request = HttpWebRequestFactory.Create(uri);
             request.Method = HttpWebRequestMethod.GET;
             request.KeepAlive = true;
             request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
 
-            var cached = Cache[u.Uri.ToString()];
+            var cached = Cache[uri.ToString()];
             if (cached != null) {
                 request.Headers.Add(HttpRequestHeader.IfNoneMatch, cached.ETag);
             }
@@ -148,7 +152,7 @@ namespace SolrNet.Impl {
             try {
                 var response = GetResponse(request);
                 if (response.ETag != null)
-                    Cache.Add(new SolrCacheEntity(u.Uri.ToString(), response.ETag, response.Data));
+                    Cache.Add(new SolrCacheEntity(uri.ToString(), response.ETag, response.Data));
                 return response.Data;
             } catch (WebException e) {
                 if (e.Response != null) {
@@ -159,11 +163,11 @@ namespace SolrNet.Impl {
                         }
                         using (var s = e.Response.GetResponseStream())
                         using (var sr = new StreamReader(s)) {
-                            throw new SolrConnectionException(sr.ReadToEnd(), e, u.Uri.ToString());
+                            throw new SolrConnectionException(sr.ReadToEnd(), e, uri.ToString());
                         }
                     }
                 }
-                throw new SolrConnectionException(e, u.Uri.ToString());
+                throw new SolrConnectionException(e, uri.ToString());
             }
         }
 
@@ -230,5 +234,8 @@ namespace SolrNet.Impl {
                 return Encoding.UTF8;
             }
         }
+
+
+        
     }
 }

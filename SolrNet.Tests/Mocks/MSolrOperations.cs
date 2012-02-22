@@ -151,5 +151,10 @@ namespace SolrNet.Tests.Mocks {
         public IEnumerable<ValidationResult> EnumerateValidationResults() {
             throw new NotImplementedException();
         }
+
+        public Uri GetQuery(ISolrQuery query, QueryOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

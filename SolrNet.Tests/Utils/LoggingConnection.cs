@@ -42,5 +42,13 @@ namespace SolrNet.Tests.Utils {
             Console.WriteLine("Result is:\n" + r);
             return r;
         }
+
+        public Uri GetQuery(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters)
+        {
+            Console.WriteLine("Generating Uri");
+            var r = conn.GetQuery(relativeUrl, parameters);
+            Console.WriteLine("Uri:\n" + r.ToString());
+            return r;
+        }
     }
 }

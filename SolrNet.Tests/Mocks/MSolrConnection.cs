@@ -24,5 +24,10 @@ namespace SolrNet.Tests.Mocks {
         public string Get(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters) {
             return get.Invoke(relativeUrl, parameters);
         }
+
+        public Uri GetQuery(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

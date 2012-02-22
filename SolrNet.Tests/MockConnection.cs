@@ -65,5 +65,10 @@ namespace SolrNet.Tests {
                 Assert.IsTrue(expectations.Contains(p), "Parameter {0}={1}, not found in expectations.\nCurrent expectations are:\n {2}", p.Key, p.Value, DumpParams(expectations));
             return response;
         }
+
+        public Uri GetQuery(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

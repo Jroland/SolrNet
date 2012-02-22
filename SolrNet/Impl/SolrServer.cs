@@ -99,6 +99,17 @@ namespace SolrNet.Impl {
         }
 
         /// <summary>
+        /// Get the Solr Uri for the given query values
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public Uri GetQuery(ISolrQuery query, QueryOptions options)
+        {
+            return basicServer.GetQuery(query, options);
+        }
+
+        /// <summary>
         /// Executes a facet field query only
         /// </summary>
         /// <param name="facet"></param>
@@ -257,5 +268,8 @@ namespace SolrNet.Impl {
         public SolrMoreLikeThisHandlerResults<T> MoreLikeThis(SolrMLTQuery query, MoreLikeThisHandlerQueryOptions options) {
             return basicServer.MoreLikeThis(query, options);
         }
+
+
+        
     }
 }

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using SolrNet.Commands.Parameters;
 using SolrNet.Impl;
 using SolrNet.Schema;
+using System;
 
 namespace SolrNet {
     /// <summary>
@@ -32,6 +33,14 @@ namespace SolrNet {
         /// <param name="options"></param>
         /// <returns></returns>
         SolrQueryResults<T> Query(ISolrQuery query, QueryOptions options);
+
+        /// <summary>
+        /// Gets the generated SOLR Uri
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        Uri GetQuery(ISolrQuery query, QueryOptions options);
 
         /// <summary>
         /// Executes a MoreLikeThisHandler query
@@ -59,5 +68,7 @@ namespace SolrNet {
         /// </summary>
         /// <returns>DIH status</returns>
         SolrDIHStatus GetDIHStatus(KeyValuePair<string, string> options);
+
+   
     }
 }

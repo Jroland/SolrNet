@@ -92,6 +92,11 @@ namespace SolrNet.Impl {
             return queryExecuter.Execute(query, options);
         }
 
+        public Uri GetQuery(ISolrQuery query, QueryOptions options)
+        {
+            return queryExecuter.GetQuery(query, options);
+        }
+
         public string Send(ISolrCommand cmd) {
             return cmd.Execute(connection);
         }
@@ -128,5 +133,8 @@ namespace SolrNet.Impl {
         {
             return this.queryExecuter.Execute(query, options);
         }
+
+
+        
     }
 }

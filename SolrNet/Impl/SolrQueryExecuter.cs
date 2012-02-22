@@ -558,5 +558,18 @@ namespace SolrNet.Impl {
             var qr = mlthResultParser.Parse(r);
             return qr;
         }
+
+        /// <summary>
+        /// Returns the Solr Uri that would be executed
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public Uri GetQuery(ISolrQuery query, QueryOptions options)
+        {
+            var param = GetAllParameters(query, options);
+            return connection.GetQuery(Handler, param);
+        }
+        
     }
 }

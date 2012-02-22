@@ -16,6 +16,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 namespace SolrNet {
     /// <summary>
@@ -47,5 +48,13 @@ namespace SolrNet {
         /// <param name="parameters">Query string parameters</param>
         /// <returns></returns>
         string Get(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters);
+
+        /// <summary>
+        /// Returns the Solr Uri that would be used against the connection
+        /// </summary>
+        /// <param name="Handler"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        Uri GetQuery(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters);
     }
 }
