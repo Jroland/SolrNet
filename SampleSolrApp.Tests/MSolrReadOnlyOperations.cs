@@ -53,5 +53,11 @@ namespace SampleSolrApp.Tests {
         public ICollection<KeyValuePair<string, int>> FacetFieldQuery(SolrFacetFieldQuery facets) {
             throw new NotImplementedException();
         }
+
+
+        public Uri GetQuery(ISolrQuery query, QueryOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
