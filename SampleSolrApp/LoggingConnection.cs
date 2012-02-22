@@ -44,7 +44,12 @@ namespace SampleSolrApp {
             logger.DebugFormat("GETting '{0}' from '{1}'", stringParams, relativeUrl);
             return connection.Get(relativeUrl, parameters);
         }
-
+        
         private static readonly ILog logger = LogManager.GetLogger(typeof (LoggingConnection));
+
+        public Uri GetQuery(string relativeUrl, IEnumerable<KeyValuePair<string, string>> parameters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
