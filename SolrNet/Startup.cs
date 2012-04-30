@@ -84,6 +84,16 @@ namespace SolrNet {
         }
 
         /// <summary>
+        /// Initialize the SolrNet library as a query builder language only.  Ignores all other features.
+        /// </summary>
+        public static ISolrQueryBuilderOperation GetQueryBuilder()
+        {
+            ISolrConnection none = new SolrConnection("http://dummy.connection");
+            Init<object>(none);
+            return Container.GetInstance<ISolrQueryBuilderOperation>();
+        }
+
+        /// <summary>
         /// Initializes SolrNet with the built-in container
         /// </summary>
         /// <typeparam name="T">Document type</typeparam>
@@ -122,6 +132,8 @@ namespace SolrNet {
 
             Container.Register<ISolrOperations<T>>(c => new SolrServer<T>(c.GetInstance<ISolrBasicOperations<T>>(), Container.GetInstance<IReadOnlyMappingManager>(), Container.GetInstance<IMappingValidator>()));
             Container.Register<ISolrReadOnlyOperations<T>>(c => new SolrServer<T>(c.GetInstance<ISolrBasicOperations<T>>(), Container.GetInstance<IReadOnlyMappingManager>(), Container.GetInstance<IMappingValidator>()));
+
+            Container.Register<ISolrQueryBuilderOperation>(c => new SolrQueryBuilderOperation(c.GetInstance<ISolrQuerySerializer>(), c.GetInstance<ISolrFacetQuerySerializer>()));
 
             var coreAdminKey = typeof(ISolrCoreAdmin).Name + connectionKey;
             Container.Register<ISolrCoreAdmin>(coreAdminKey, c => new SolrCoreAdmin(connection, c.GetInstance<ISolrHeaderResponseParser>(), c.GetInstance<ISolrStatusResponseParser>()));
